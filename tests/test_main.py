@@ -43,3 +43,9 @@ def test_form_validation_bounds():
       },
   )
   assert response.status_code == 422
+
+def test_health_check():
+  # Cobre a linha 26 em main.py (endpoint /health)
+  response = client.get("/health")
+  assert response.status_code == 200
+  assert response.json()["status"] == "healthy"
