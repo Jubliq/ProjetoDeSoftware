@@ -1,32 +1,32 @@
 {% extends "base.html" %} {% block content %}
-<div class="bg-white p-6 rounded-lg shadow-md mt-6">
-  <h2 class="text-2xl font-bold mb-4 text-green-700">
+<div class="bg-white p-6 rounded-xl shadow-lg mt-8 border border-green-100">
+  <h2 class="text-2xl font-extrabold mb-6 text-green-800 text-center">
     Identificação do Operador
   </h2>
-  <form action="/scale" method="GET" class="space-y-4">
+  <form action="/scale" method="GET" class="space-y-5">
     <div>
-      <label class="block font-semibold mb-2">CPF do Operador:</label>
+      <label class="block font-bold text-gray-700 mb-2">CPF do Operador:</label>
       <input
         type="text"
         name="cpf"
         placeholder="000.000.000-00"
         required
-        class="w-full p-4 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-green-600"
+        class="w-full p-4 border-2 border-gray-300 rounded-xl text-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
       />
     </div>
     <div>
-      <label class="block font-semibold mb-2">Senha:</label>
+      <label class="block font-bold text-gray-700 mb-2">Senha de Acesso:</label>
       <input
         type="password"
         name="password"
         placeholder="••••••••"
         required
-        class="w-full p-4 border border-gray-300 rounded-lg text-lg focus:ring-2 focus:ring-green-600"
+        class="w-full p-4 border-2 border-gray-300 rounded-xl text-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
       />
     </div>
     <button
       type="submit"
-      class="w-full bg-green-600 text-white font-bold py-4 rounded-lg text-xl hover:bg-green-700 transition"
+      class="w-full bg-green-600 text-white font-bold py-4 rounded-xl text-xl hover:bg-green-700 active:bg-green-800 shadow-md transition"
     >
       Entrar no Sistema
     </button>

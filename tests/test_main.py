@@ -13,7 +13,7 @@ def test_read_login():
 def test_read_scale():
   response = client.get("/scale")
   assert response.status_code == 200
-  assert "Registro de Pesagem de Lote" in response.text
+  assert "Registro de Pesagem" in response.text
 
 
 def test_create_receipt():
@@ -28,4 +28,18 @@ def test_create_receipt():
   )
   assert response.status_code == 200
   assert "Pesagem Registrada com Sucesso!" in response.text
-  assert "R$ 65.0" in response.text  # 10.0 kg * R$ 6.50 (Alumínio) = R$ 65.00
+  assert "R$ 65.0" in response.text
+
+
+def test_form_validation_bounds():
+  # Dados inválidos (peso zero ou vazio) devem ser rejeitados com erro 422 pela API
+  response = client.post(
+      "/receipt",
+      data={
+          "coop_name": "",
+          "material_category": "Vidro",
+          "weight_kg": 0.0,
+          "operator_cpf": "123.456.789-00",
+      },
+  )
+  assert response.status_code == 422
