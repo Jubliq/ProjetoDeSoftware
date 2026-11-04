@@ -5,7 +5,11 @@ from fastapi.templating import Jinja2Templates
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="MVP Associação de Reciclagem", version="1.0.0")
+app = FastAPI(
+    title="MVP Associação de Reciclagem",
+    version="1.0.0",
+    description="Sistema de pesagem comunitária e repasse alinhado ao ODS 8.",
+)
 templates = Jinja2Templates(directory="app/templates")
 
 PRICES = {
@@ -14,6 +18,12 @@ PRICES = {
     "Alumínio": 6.50,
     "Vidro": 0.20,
 }
+
+
+@app.get("/health", tags=["Monitoring"])
+def health_check():
+  """Endpoint de verificação de saúde para monitoramento em produção."""
+  return {"status": "healthy", "service": "reciclagem-mvp", "version": "1.0.0"}
 
 
 @app.get("/", response_class=HTMLResponse)
