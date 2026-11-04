@@ -8,7 +8,6 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(title="MVP Associação de Reciclagem", version="1.0.0")
 templates = Jinja2Templates(directory="app/templates")
 
-# Tabela de preços simulada por kg para o cálculo do repasse
 PRICES = {
     "Papelão Ondulado": 0.50,
     "Plástico PET": 1.80,
@@ -19,12 +18,12 @@ PRICES = {
 
 @app.get("/", response_class=HTMLResponse)
 def read_login(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+  return templates.TemplateResponse(request, "login.html")
 
 
 @app.get("/scale", response_class=HTMLResponse)
 def read_scale(request: Request, cpf: str = None):
-    return templates.TemplateResponse("scale.html", {"request": request})
+  return templates.TemplateResponse(request, "scale.html")
 
 
 @app.post("/receipt", response_class=HTMLResponse)
@@ -35,15 +34,13 @@ def create_receipt(
     weight_kg: float = Form(...),
     operator_cpf: str = Form(...),
 ):
-    unit_price = PRICES.get(material_category, 0.50)
-    estimated_value = round(weight_kg * unit_price, 2)
+  unit_price = PRICES.get(material_category, 0.50)
+  estimated_value = round(weight_kg * unit_price, 2)
 
-    data = {
-        "coop_name": coop_name,
-        "material_category": material_category,
-        "weight_kg": weight_kg,
-        "estimated_value": estimated_value,
-    }
-    return templates.TemplateResponse(
-        "receipt.html", {"request": request, "data": data}
-    )
+  data = {
+      "coop_name": coop_name,
+      "material_category": material_category,
+      "weight_kg": weight_kg,
+      "estimated_value": estimated_value,
+  }
+  return templates.TemplateResponse(request, "receipt.html", {"data": data})
