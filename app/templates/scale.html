@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block content %}
+<div class="bg-white p-6 rounded-lg shadow-md mt-6">
+  <h2 class="text-2xl font-bold mb-4 text-green-700">
+    Registro de Pesagem de Lote
+  </h2>
+  <form action="/receipt" method="POST" class="space-y-4">
+    <div>
+      <label class="block font-semibold mb-2"
+        >Nome do Cooperado / Catador:</label
+      >
+      <input
+        type="text"
+        name="coop_name"
+        placeholder="Ex: Maria das Dores"
+        required
+        class="w-full p-4 border border-gray-300 rounded-lg text-lg"
+      />
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-2">Categoria do Material:</label>
+      <select
+        name="material_category"
+        class="w-full p-4 border border-gray-300 rounded-lg text-lg bg-white"
+      >
+        <option value="Papelão Ondulado">
+          📦 Papelão Ondulado (R$ 0,50/kg)
+        </option>
+        <option value="Plástico PET">🧴 Plástico PET (R$ 1,80/kg)</option>
+        <option value="Alumínio">🥫 Alumínio (R$ 6,50/kg)</option>
+        <option value="Vidro">🍾 Vidro (R$ 0,20/kg)</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-2">Peso na Balança (kg):</label>
+      <input
+        type="number"
+        step="0.01"
+        name="weight_kg"
+        placeholder="0.00"
+        required
+        class="w-full p-4 border border-gray-300 rounded-lg text-lg"
+      />
+    </div>
+
+    <input type="hidden" name="operator_cpf" value="123.456.789-00" />
+
+    <button
+      type="submit"
+      class="w-full bg-green-600 text-white font-bold py-4 rounded-lg text-xl hover:bg-green-700 transition"
+    >
+      Registrar e Emitir Recibo
+    </button>
+  </form>
+</div>
+{% endblock %}
