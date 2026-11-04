@@ -1,13 +1,18 @@
-from pydantic import BaseModel, Field
-
-
-class ReceiptCreate(BaseModel):
-  coop_name: str = Field(..., min_length=2)
-  material_category: str
-  weight_kg: float = Field(..., gt=0)
-  operator_cpf: str
-
+from pydantic import BaseModel, ConfigDict
+from typing import Optional
 
 class OperatorLogin(BaseModel):
-  cpf: str
-  password: str
+    cpf: str
+    password: Optional[str] = None
+
+class ReceiptCreate(BaseModel):
+    coop_name: str
+    material_category: str
+    weight_kg: float
+    operator_cpf: str
+
+class ReceiptResponse(ReceiptCreate):
+    id: Optional[int] = None
+    total_value: Optional[float] = None
+
+    model_config = ConfigDict(from_attributes=True)

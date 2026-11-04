@@ -1,81 +1,126 @@
-{% extends "base.html" %} {% block content %}
-<div class="bg-white p-6 rounded-xl shadow-lg mt-4 border border-green-100">
-  <div class="flex items-center justify-between mb-4">
-    <h2 class="text-2xl font-extrabold text-green-800">Registro de Pesagem</h2>
-    <span
-      class="text-xs bg-green-100 text-green-800 font-semibold px-2.5 py-1 rounded-full"
-      >Posto 01</span
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reciclagem MVP - Galpão</title>
+    <!-- Tailwind CSS para estilização -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col justify-between">
+    <!-- Cabeçalho -->
+    <header
+      class="bg-green-700 text-white p-4 shadow-md flex justify-between items-center"
     >
-  </div>
-
-  <!-- Container de feedback de usabilidade / erros operacionais -->
-  <div
-    id="feedback-alert"
-    class="hidden mb-4 p-4 bg-amber-50 border-l-4 border-amber-500 text-amber-700 text-sm rounded"
-  >
-    <strong>Atenção:</strong> Verifique se o peso digitado é superior a 0 kg e
-    se todos os campos obrigatórios estão preenchidos.
-  </div>
-
-  <form action="/receipt" method="POST" class="space-y-5">
-    <div>
-      <label class="block font-bold text-gray-700 mb-2"
-        >Nome do Cooperado / Catador:</label
+      <div class="flex items-center space-x-2">
+        <span class="text-xl font-bold">♻️ Reciclagem MVP - Galpão</span>
+      </div>
+      <span class="bg-green-600 px-3 py-1 rounded text-sm font-semibold shadow"
+        >Operador Ativo</span
       >
-      <input
-        type="text"
-        name="coop_name"
-        placeholder="Ex: Maria das Dores"
-        required
-        class="w-full p-4 border-2 border-gray-300 rounded-xl text-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
-      />
-    </div>
+    </header>
 
-    <div>
-      <label class="block font-bold text-gray-700 mb-2"
-        >Categoria do Material:</label
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow flex items-center justify-center p-4">
+      <div
+        class="bg-white p-8 rounded-xl shadow-lg w-full max-w-lg border border-gray-200"
       >
-      <select
-        name="material_category"
-        class="w-full p-4 border-2 border-gray-300 rounded-xl text-lg bg-white focus:outline-none focus:border-green-600"
-      >
-        <option value="Papelão Ondulado">
-          📦 Papelão Ondulado (R$ 0,50/kg)
-        </option>
-        <option value="Plástico PET">🧴 Plástico PET (R$ 1,80/kg)</option>
-        <option value="Alumínio">🥫 Alumínio (R$ 6,50/kg)</option>
-        <option value="Vidro">🍾 Vidro (R$ 0,20/kg)</option>
-      </select>
-    </div>
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-green-800">Registro de Pesagem</h2>
+          <span
+            class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded"
+            >Posto 01</span
+          >
+        </div>
 
-    <div>
-      <label class="block font-bold text-gray-700 mb-2"
-        >Peso Líquido na Balança (kg):</label
-      >
-      <input
-        type="number"
-        step="0.01"
-        min="0.01"
-        max="10000"
-        name="weight_kg"
-        placeholder="0.00"
-        required
-        class="w-full p-4 border-2 border-gray-300 rounded-xl text-lg focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
-      />
-      <p class="text-xs text-gray-500 mt-1">
-        Insira o valor decimal exato medido na balança digital.
-      </p>
-    </div>
+        <!-- Formulário apontando para a rota POST do backend -->
+        <form
+          id="form-pesagem"
+          action="/receipt"
+          method="POST"
+          class="space-y-4"
+        >
+          <!-- Campo de Nome do Cooperado -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Nome do Cooperado / Catador:</label
+            >
+            <input
+              type="text"
+              name="coop_name"
+              id="coop_name"
+              required
+              placeholder="Ex: Maria das Dores"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+            />
+          </div>
 
-    <input type="hidden" name="operator_cpf" value="123.456.789-00" />
+          <!-- Campo de Categoria do Material -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Categoria do Material:</label
+            >
+            <select
+              name="material_category"
+              id="material_category"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+            >
+              <option value="Papelão Ondulado">
+                📦 Papelão Ondulado (R$ 0,50/kg)
+              </option>
+              <option value="Plástico PET">🍾 Plástico PET (R$ 1,20/kg)</option>
+              <option value="Alumínio">🥫 Alumínio (R$ 5,00/kg)</option>
+            </select>
+          </div>
 
-    <!-- Alvo tátil ampliado (altura h-16 / py-4) para operação facilitada no galpão -->
-    <button
-      type="submit"
-      class="w-full bg-green-600 text-white font-bold py-4 rounded-xl text-xl hover:bg-green-700 active:bg-green-800 shadow-md transition transform active:scale-98"
-    >
-      Registrar e Emitir Recibo
-    </button>
-  </form>
-</div>
-{% endblock %}
+          <!-- Campo de Peso Líquido -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1"
+              >Peso Líquido na Balança (kg):</label
+            >
+            <input
+              type="text"
+              name="weight_kg"
+              id="weight_kg"
+              required
+              placeholder="0.00"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+            />
+            <p class="text-xs text-gray-500 mt-1">
+              Insira o valor decimal exato medido na balança digital (aceita
+              vírgula).
+            </p>
+          </div>
+
+          <!-- Campo oculto ou adicional para o CPF do operador (caso exigido pelo backend) -->
+          <!-- Se o operador estiver logado por sessão, pode ajustar conforme necessário -->
+          <input type="hidden" name="operator_cpf" value="000.000.000-00" />
+
+          <button
+            type="submit"
+            class="w-full bg-green-600 text-white font-semibold py-3 rounded-lg hover:bg-green-700 transition duration-200 shadow-md"
+          >
+            Registrar e Emitir Recibo
+          </button>
+        </form>
+      </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-gray-800 text-gray-300 text-center py-3 text-sm">
+      Associação de Reciclagem &copy; 2026 — Alinhado ao ODS 8
+    </footer>
+
+    <!-- Script JavaScript: Corrige a vírgula para ponto antes de enviar -->
+    <script>
+      document
+        .getElementById("form-pesagem")
+        .addEventListener("submit", function () {
+          const inputPeso = document.getElementById("weight_kg");
+          if (inputPeso.value) {
+            inputPeso.value = inputPeso.value.replace(",", ".");
+          }
+        });
+    </script>
+  </body>
+</html>
