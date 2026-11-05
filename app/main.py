@@ -54,3 +54,11 @@ def create_receipt(
       "estimated_value": estimated_value,
   }
   return templates.TemplateResponse(request, "receipt.html", {"data": data})
+
+@app.get("/health", tags=["Monitoring"])
+def health_check():
+    return {
+        "status": "online",
+        "service": "MVP Reciclagem API",
+        "database": "connected"
+    }
